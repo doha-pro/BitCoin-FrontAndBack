@@ -19,10 +19,10 @@ exports.register = (req, res) => {
             console.log(error)
         }
         if (results.length > 0) {
-            return res.render('register', { message: "This email is already used" })
+            return res.status(400).render('register', { message: "This email is already used" })
         } else {
             if (password !== passwordConfirmation) {
-                return res.render('register', { message: "Password don't match" })
+                return res.status(400).render('register', { message: "Password don't match" })
 
             } else {
                 let hashedPassword = await bcrypt.hash(password, 8);
@@ -50,7 +50,7 @@ exports.login = async(req, res) => {
         }
         db.query("SELECT * FROM users where email = ?", [email], async(error, results) => {
             if (!results || !(await bcrypt.compare(password, results[0].password))) {
-                return res.status(401).render('login', { message: "Email or password is incorrect" })
+                return res.status(400).render('login', { message: "Email or password is incorrect" })
 
             } else {
                 const id = results[0].id;

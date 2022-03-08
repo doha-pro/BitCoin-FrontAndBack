@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router();
 const authController = require('../controllers/auth');
 const investmentsController = require('../controllers/investement')
+const methodController = require('../controllers/method')
     // get all data 
 router.get("/", investmentsController.getAllInvestments, (req, res) => {
     if (req.investments) {
@@ -15,6 +16,9 @@ router.get("/", investmentsController.getAllInvestments, (req, res) => {
     }
 
 })
+router.use(methodController.methods)
+
+
 router.get("/show/:id", investmentsController.show, (req, res) => {
     console.log("weeeweeeeeeeeeeeeeeeeeeeeeeeeee");
     console.log(req.investment);
@@ -22,8 +26,7 @@ router.get("/show/:id", investmentsController.show, (req, res) => {
 
 })
 
-
-router.get("/delete/:id", investmentsController.delete, (req, res) => {
+router.delete("/delete/:id", investmentsController.delete, (req, res) => {
 
 })
 
@@ -33,7 +36,7 @@ router.get("/edit/:id", investmentsController.edit, (req, res) => {
     res.render("update", { investement: req.investment })
 
 })
-router.post("/edit/:id", investmentsController.update)
+router.put("/edit/:id", investmentsController.update)
 
 router.post("/invest", investmentsController.investPost, (req, res) => {
     res.redirect("/investment")
