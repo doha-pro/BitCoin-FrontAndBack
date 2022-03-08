@@ -10,9 +10,7 @@ const db = mysql.createConnection({
     password: process.env.password,
     database: process.env.database
 });
-exports.add = (x, y) => {
-    return x + y
-}
+
 
 exports.register = (req, res) => {
     const { name, email, password, passwordConfirmation } = req.body;
